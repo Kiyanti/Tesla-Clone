@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import { Fade } from "react-awesome-reveal";
 
 export default function Section({
   title,
@@ -9,17 +10,19 @@ export default function Section({
 }) {
   return (
     <Wrapper backgroundImg={backgroundImg}>
-      <ItemText>
-        <h1>{title}</h1>
-        <p>{description}</p>
-      </ItemText>
-      <Buttons>
-        <ButtonGroup>
-          <LeftButton>{leftBtnText}</LeftButton>
-          {rightBtnText && <RightButton>{rightBtnText}</RightButton>}
-        </ButtonGroup>
-        <DownArrow src="../public/down-arrow.svg" />
-      </Buttons>
+      <Fade direction="right">
+        <ItemText>
+          <h1>{title}</h1>
+          <p>{description}</p>
+        </ItemText>
+        <Buttons>
+          <ButtonGroup>
+            <LeftButton>{leftBtnText}</LeftButton>
+            {rightBtnText && <RightButton>{rightBtnText}</RightButton>}
+          </ButtonGroup>
+          <DownArrow src="../public/down-arrow.svg" />
+        </Buttons>
+      </Fade>
     </Wrapper>
   );
 }
@@ -30,7 +33,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100vw;
-  height: 100vh;
+  height: 101vh;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
