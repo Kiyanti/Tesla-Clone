@@ -1,26 +1,31 @@
+import { useState } from "react";
 import styled from "styled-components";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from '@mui/icons-material/Close';
 
 export default function Header() {
+  const [showMenu, setShowMenu] = useState(false);
+
+  const handleShowMenu = () => setShowMenu(condition => !condition);
+
   return (
     <Container>
       <a>
         <img src="../public/logo.svg" alt="TESLA" />
       </a>
       <Menu>
-        <MenuLink href="#">Model S |</MenuLink>
-        <MenuLink href="#">Model 3 |</MenuLink>
-        <MenuLink href="#">Model X |</MenuLink>
-        <MenuLink href="#">Model Y</MenuLink>
+        <MenuLink mainMenu href="#">Model S |</MenuLink>
+        <MenuLink mainMenu href="#">Model 3 |</MenuLink>
+        <MenuLink mainMenu href="#">Model X |</MenuLink>
+        <MenuLink mainMenu href="#">Model Y</MenuLink>
       </Menu>
       <SideMenu>
         <MenuLink href="#">Shop</MenuLink>
         <MenuLink href="#">Tesla Account</MenuLink>
-        <CustomMenu />
+        <CustomMenu onClick={() => handleShowMenu()}/>
       </SideMenu>
-      <BurgerNav>
-        <CloseButton />
+    <BurgerNav show={showMenu}>
+        <CloseButton onClick={() => handleShowMenu()}/>
         <li>
           <a href="#">Existing Inventory</a>
         </li>
@@ -77,7 +82,7 @@ const MenuLink = styled.a`
   font-weight: 600;
   text-transform: uppercase;
   padding: 0 8px;
-  border-bottom: 2px solid;
+  border-bottom: ${({mainMenu}) => mainMenu ? '2px solid' : null};
 `;
 
 const SideMenu = styled.div`
@@ -103,6 +108,8 @@ const BurgerNav = styled.ul`
   z-index: 20;
   list-style: none;
   padding: 20px;
+  transform: ${({show}) => show ? 'translateX(0)' : 'translateX(100%)'};
+  transition: transform 0.3s ease-out;
   li {
     text-align: left;
     width: 100%;
@@ -116,4 +123,5 @@ const BurgerNav = styled.ul`
 
 const CloseButton = styled(CloseIcon)`
   margin-left: auto;
+  cursor: pointer;
 `
