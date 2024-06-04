@@ -9,7 +9,7 @@ export default function Section({
   rightBtnText,
 }) {
   return (
-    <Wrapper backgroundImg={backgroundImg}>
+    <Wrapper $backgroundImg={backgroundImg}>
       <Fade direction="right">
         <ItemText>
           <h1>{title}</h1>
@@ -37,9 +37,9 @@ const Wrapper = styled.div`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-image: url(${({ backgroundImg }) => backgroundImg});
+  background-image: url(${({ $backgroundImg }) => $backgroundImg});
   /* background-image: url(${(props) => props.backgroundImg}); */
-`;
+  `;
 
 const ItemText = styled.div`
   padding-top: 15vh;

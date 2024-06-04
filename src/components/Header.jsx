@@ -1,12 +1,17 @@
 import { useState } from "react";
 import styled from "styled-components";
 import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from '@mui/icons-material/Close';
+import CloseIcon from "@mui/icons-material/Close";
+import { selectCars } from "../features/reduxSlices/carSlice/carSlice";
+import { useSelector } from "react-redux";
+import { nanoid } from "@reduxjs/toolkit";
 
 export default function Header() {
   const [showMenu, setShowMenu] = useState(false);
+  const car = useSelector(selectCars);
+  console.log(car);
 
-  const handleShowMenu = () => setShowMenu(condition => !condition);
+  const handleShowMenu = () => setShowMenu((condition) => !condition);
 
   return (
     <Container>
@@ -14,42 +19,24 @@ export default function Header() {
         <img src="../public/logo.svg" alt="TESLA" />
       </a>
       <Menu>
-        <MenuLink mainMenu href="#">Model S |</MenuLink>
-        <MenuLink mainMenu href="#">Model 3 |</MenuLink>
-        <MenuLink mainMenu href="#">Model X |</MenuLink>
-        <MenuLink mainMenu href="#">Model Y</MenuLink>
+        {car?.map((car) => (
+          <MenuLink key={nanoid()} $mainMenu href="#">
+            {car}
+          </MenuLink>
+        ))}
       </Menu>
       <SideMenu>
         <MenuLink href="#">Shop</MenuLink>
         <MenuLink href="#">Tesla Account</MenuLink>
-        <CustomMenu onClick={() => handleShowMenu()}/>
+        <CustomMenu onClick={() => handleShowMenu()} />
       </SideMenu>
-    <BurgerNav show={showMenu}>
-        <CloseButton onClick={() => handleShowMenu()}/>
-        <li>
-          <a href="#">Existing Inventory</a>
-        </li>
-        <li>
-          <a href="#">Used Inventory</a>
-        </li>
-        <li>
-          <a href="#">Trade-in</a>
-        </li>
-        <li>
-          <a href="#">Cybertruck</a>
-        </li>
-        <li>
-          <a href="#">Roadster</a>
-        </li>
-        <li>
-          <a href="#">Existing Inventory</a>
-        </li>
-        <li>
-          <a href="#">Existing Inventory</a>
-        </li>
-        <li>
-          <a href="#">Existing Inventory</a>
-        </li>
+      <BurgerNav $show={showMenu}>
+        <CloseButton onClick={() => handleShowMenu()} />
+        {car?.map((car) => (
+          <li>
+            <a href="#">{car}</a>
+          </li>
+        ))}
       </BurgerNav>
     </Container>
   );
@@ -82,7 +69,12 @@ const MenuLink = styled.a`
   font-weight: 600;
   text-transform: uppercase;
   padding: 0 8px;
-  border-bottom: ${({mainMenu}) => mainMenu ? '2px solid' : null};
+  display: inline-block;
+  border-bottom: ${({ $mainMenu }) => ($mainMenu ? "2px solid" : null)};
+  border-right: ${({ $mainMenu }) => ($mainMenu ? "2px solid" : null)};
+  &:last-child {
+    border-right: none;
+  }
 `;
 
 const SideMenu = styled.div`
@@ -108,13 +100,13 @@ const BurgerNav = styled.ul`
   z-index: 20;
   list-style: none;
   padding: 20px;
-  transform: ${({show}) => show ? 'translateX(0)' : 'translateX(100%)'};
+  transform: ${({ $show }) => ($show ? "translateX(0)" : "translateX(100%)")};
   transition: transform 0.3s ease-out;
   li {
     text-align: left;
     width: 100%;
     padding: 15px 0;
-    border-bottom: 1px solid rgba(0, 0, 0, .2);    
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     a {
       font-weight: 600;
     }
@@ -124,4 +116,4 @@ const BurgerNav = styled.ul`
 const CloseButton = styled(CloseIcon)`
   margin-left: auto;
   cursor: pointer;
-`
+`;
