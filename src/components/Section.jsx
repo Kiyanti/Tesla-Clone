@@ -20,7 +20,7 @@ export default function Section({
             <LeftButton>{leftBtnText}</LeftButton>
             {rightBtnText && <RightButton>{rightBtnText}</RightButton>}
           </ButtonGroup>
-          <DownArrow src="../public/down-arrow.svg" />
+          <DownArrow src="down-arrow.svg" />
         </Buttons>
       </Fade>
     </Wrapper>

@@ -16,7 +16,7 @@ export default function Header() {
   return (
     <Container>
       <a>
-        <img src="../public/logo.svg" alt="TESLA" />
+        <img src="logo.svg" alt="TESLA" />
       </a>
       <Menu>
         {car?.map((car) => (
