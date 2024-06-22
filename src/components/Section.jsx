@@ -1,15 +1,18 @@
 import styled, { keyframes } from "styled-components";
 import { Fade } from "react-awesome-reveal";
+import { forwardRef } from "react";
 
-export default function Section({
+
+const Section = forwardRef(({
   title,
   description,
   backgroundImg,
   leftBtnText,
   rightBtnText,
-}) {
+}, carsRef) => {
+
   return (
-    <Wrapper $backgroundImg={backgroundImg}>
+    <Wrapper ref={carsRef} $backgroundImg={backgroundImg}>
       <Fade direction="right">
         <ItemText>
           <h1>{title}</h1>
@@ -25,7 +28,7 @@ export default function Section({
       </Fade>
     </Wrapper>
   );
-}
+})
 
 const Wrapper = styled.div`
   display: flex;
@@ -39,7 +42,7 @@ const Wrapper = styled.div`
   background-repeat: no-repeat;
   background-image: url(${({ $backgroundImg }) => $backgroundImg});
   /* background-image: url(${(props) => props.backgroundImg}); */
-  `;
+`;
 
 const ItemText = styled.div`
   padding-top: 15vh;
@@ -97,3 +100,6 @@ const DownArrow = styled.img`
 `;
 
 const Buttons = styled.div``;
+
+
+export default Section;

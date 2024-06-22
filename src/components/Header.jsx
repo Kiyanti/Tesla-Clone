@@ -4,12 +4,11 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { selectCars } from "../features/reduxSlices/carSlice/carSlice";
 import { useSelector } from "react-redux";
-import { nanoid } from "@reduxjs/toolkit";
 
-export default function Header() {
+export default function Header({ scrollHandler }) {
   const [showMenu, setShowMenu] = useState(false);
   const car = useSelector(selectCars);
-  console.log(car);
+  // console.log(car);
 
   const handleShowMenu = () => setShowMenu((condition) => !condition);
 
@@ -19,23 +18,30 @@ export default function Header() {
         <img src="logo.svg" alt="TESLA" />
       </a>
       <Menu>
-        {car?.map((car) => (
-          <MenuLink key={nanoid()} $mainMenu href="#">
-            {car}
+        {car?.map((carItem) => (
+          <MenuLink
+            onClick={(e) => scrollHandler(carItem.id, e)}
+            key={carItem.id}
+            $mainMenu
+            href="#"
+          >
+            {carItem.car}
           </MenuLink>
         ))}
       </Menu>
       <SideMenu>
         <MenuLink href="#">Shop</MenuLink>
-        <MenuLink href="#">Tesla Account</MenuLink>
+        <MenuLink href="#">
+          Tesla Account
+        </MenuLink>
         <CustomMenu onClick={() => handleShowMenu()} />
       </SideMenu>
       <BurgerNav $show={showMenu}>
         <CloseButton onClick={() => handleShowMenu()} />
-        {car?.map((car) => (
-          <li>
-            <a href="#">{car}</a>
-          </li>
+        {car?.map((carItem) => (
+          <CarItem onClick={(e) => scrollHandler(carItem.id, e)} key={carItem.id}>
+            <a href="#">{carItem.car}</a>
+          </CarItem>
         ))}
       </BurgerNav>
     </Container>
@@ -65,7 +71,7 @@ const Menu = styled.div`
   }
 `;
 
-const MenuLink = styled.a`
+const MenuLink = styled.a.attrs()`
   font-weight: 600;
   text-transform: uppercase;
   padding: 0 8px;
@@ -102,14 +108,15 @@ const BurgerNav = styled.ul`
   padding: 20px;
   transform: ${({ $show }) => ($show ? "translateX(0)" : "translateX(100%)")};
   transition: transform 0.3s ease-out;
-  li {
-    text-align: left;
-    width: 100%;
-    padding: 15px 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    a {
-      font-weight: 600;
-    }
+`;
+
+const CarItem = styled.li`
+  text-align: left;
+  width: 100%;
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  a {
+    font-weight: 600;
   }
 `;
 

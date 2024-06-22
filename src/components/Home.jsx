@@ -1,45 +1,24 @@
 import styled from "styled-components";
 import Section from "./Section";
+import data from "../data/carInfo.json";
+import { forwardRef } from "react";
 
-export default function Home() {
-  
+const Home = forwardRef((_props, carsRef) => {
+  const carData = data;
+
   return (
     <Container>
-      <Section
-        title="Model S"
-        backgroundImg="model-s.jpg"
-        description="Order Online for Touchless Delivery"
-        leftBtnText="Custom order"
-        rightBtnText="Existing Inventory"
-      />
-      <Section
-        title="Model Y"
-        backgroundImg="model-y.jpg"
-        description="Order Online for Touchless Delivery"
-        leftBtnText="Custom order"
-        rightBtnText="Existing Inventory"
-      />
-      <Section
-        title="Model 3"
-        backgroundImg="model-3.jpg"
-        description="Order Online for Touchless Delivery"
-        leftBtnText="Custom order"
-        rightBtnText="Existing Inventory"
-      />
-      <Section
-        title="Model X"
-        backgroundImg="model-x.jpg"
-        description="Order Online for Touchless Delivery"
-        leftBtnText="Custom order"
-        rightBtnText="Existing Inventory"
-      />
-      <Section
-        title="Lowest Cost Solar Panels in America"
-        backgroundImg="solar-panel.jpg"
-        description="Money-back guarantee"
-        leftBtnText="Order now"
-        rightBtnText="Learn more"
-      />
+      {carData?.map((car) => (
+        <Section
+          ref={(e) => (carsRef.current[car.id] = e)}
+          key={car.id}
+          title={car.title}
+          backgroundImg={car.image}
+          description={car.description}
+          leftBtnText="Custom order"
+          rightBtnText="Existing Inventory"
+        />
+      ))}
       <Section
         title="Solar for New Roofs"
         backgroundImg="solar-roof.jpg"
@@ -55,8 +34,10 @@ export default function Home() {
       />
     </Container>
   );
-}
+});
 
 const Container = styled.div`
   height: 100vh;
 `;
+
+export default Home;
