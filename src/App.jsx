@@ -1,5 +1,5 @@
-import Header from "./components/Header";
-import Home from "./components/Home";
+import Header from "./components/Header/Header";
+import Home from "./components/Home/Home";
 import { useRef, useEffect } from "react";
 
 function App() {

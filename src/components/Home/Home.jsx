@@ -1,13 +1,12 @@
-import styled from "styled-components";
-import Section from "./Section";
-import data from "../data/carInfo.json";
+import Section from "../Section/Section";
+import data from "../../data/carInfo.json";
 import { forwardRef } from "react";
 
 const Home = forwardRef((_props, carsRef) => {
   const carData = data;
 
   return (
-    <Container>
+    <>
       {carData?.map((car) => (
         <Section
           ref={(e) => (carsRef.current[car.id] = e)}
@@ -32,12 +31,8 @@ const Home = forwardRef((_props, carsRef) => {
         description=""
         leftBtnText="Shop now"
       />
-    </Container>
+    </>
   );
 });
-
-const Container = styled.div`
-  height: 100vh;
-`;
 
 export default Home;
